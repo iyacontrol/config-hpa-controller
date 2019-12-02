@@ -1,0 +1,19 @@
+apiVersion: confighpa.shareit.com/v1beta1
+kind: ConfigHpa
+metadata:
+  name: elastichd
+  namespace: sgt
+spec:
+  downscaleForbiddenWindowSeconds: 300
+  upscaleForbiddenWindowSeconds: 300
+  scaleTargetRef:
+    apiVersion: "apps/v1"
+    kind: Deployment
+    name: elastichd
+  minReplicas: 1
+  maxReplicas: 5
+  metrics:
+    - type: Resource
+      resource:
+        name: cpu
+        targetAverageUtilization: 10
