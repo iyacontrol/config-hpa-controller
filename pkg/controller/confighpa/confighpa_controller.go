@@ -497,8 +497,8 @@ func setCHPADefaults(chpa *confighpav1beta1.ConfigHpa) {
 	}
 }
 func checkCHPAValidity(chpa *confighpav1beta1.ConfigHpa) error {
-	if chpa.Spec.ScaleTargetRef.Kind != "Deployment" {
-		msg := fmt.Sprintf("configurable chpa doesn't support %s kind, use Deployment instead", chpa.Spec.ScaleTargetRef.Kind)
+	if ok := chpa.Spec.ScaleTargetRef.Kind == "Deployment" || chpa.Spec.ScaleTargetRef.Kind == "StatefulSet"; !ok {
+		msg := fmt.Sprintf("configurable chpa doesn't support %s kind, use Deployment or  instead", chpa.Spec.ScaleTargetRef.Kind)
 		log.Printf(msg)
 		return fmt.Errorf(msg)
 	}
